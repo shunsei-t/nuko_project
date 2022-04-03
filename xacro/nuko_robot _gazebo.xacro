@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="nuko_robot">
+    <material name="red">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0.0 1.0 0.0 1.0"/>
+    </material>
+    <material name="blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+
+    <xacro:macro name="right_leg" params="parent prefix xyz">
+        <joint name="${prefix}r_leg0_joint" type="continuous">
+            <parent link="${parent}"/>
+            <child link="${prefix}r_leg0_link"/>
+            <axis xyz="0 1 0"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}r_leg0_link">
+            <visual>
+                <geometry>
+                    <sphere radius="0.1"/>
+                </geometry>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}r_leg1_joint" type="continuous">
+            <parent link="${prefix}r_leg0_link"/>
+            <child link="${prefix}r_leg1_link"/>
+            <axis xyz="1 0 0"/>
+            <origin xyz="-0.15 0.0 0.0" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}r_leg1_link">
+            <visual>
+                <geometry>
+                    <box size="0.1 0.1 0.5"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}r_leg2_joint" type="continuous">
+            <parent link="${prefix}r_leg1_link"/>
+            <child link="${prefix}r_leg2_link"/>
+            <axis xyz="1 0 0"/>
+            <origin xyz="-0.1 0 -0.4" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}r_leg2_link">
+            <visual>
+                <geometry>
+                    <box size="0.1 0.1 0.5"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}r_leg3_joint" type="fixed">
+            <parent link="${prefix}r_leg2_link"/>
+            <child link="${prefix}r_leg3_link"/>
+            <origin xyz="0 0 -0.45" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}r_leg3_link">
+            <visual>
+                <geometry>
+                    <sphere radius="0.06"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="left_leg" params="parent prefix xyz">
+        <joint name="${prefix}l_leg0_joint" type="continuous">
+            <parent link="${parent}"/>
+            <child link="${prefix}l_leg0_link"/>
+            <axis xyz="0 1 0"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}l_leg0_link">
+            <visual>
+                <geometry>
+                    <sphere radius="0.1"/>
+                </geometry>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}l_leg1_joint" type="continuous">
+            <parent link="${prefix}l_leg0_link"/>
+            <child link="${prefix}l_leg1_link"/>
+            <axis xyz="1 0 0"/>
+            <origin xyz="0.15 0.0 0.0" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}l_leg1_link">
+            <visual>
+                <geometry>
+                    <box size="0.1 0.1 0.5"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}l_leg2_joint" type="continuous">
+            <parent link="${prefix}l_leg1_link"/>
+            <child link="${prefix}l_leg2_link"/>
+            <axis xyz="1 0 0"/>
+            <origin xyz="0.1 0 -0.4" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}l_leg2_link">
+            <visual>
+                <geometry>
+                    <box size="0.1 0.1 0.5"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+        <joint name="${prefix}l_leg3_joint" type="fixed">
+            <parent link="${prefix}l_leg2_link"/>
+            <child link="${prefix}l_leg3_link"/>
+            <origin xyz="0 0 -0.45" rpy="0 0 0"/>
+        </joint>
+        <link name="${prefix}l_leg3_link">
+            <visual>
+                <geometry>
+                    <sphere radius="0.06"/>
+                </geometry>
+                <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+                <material name="red"/>
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <link name="base_link"/>
+
+    <joint name="body_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_link"/>
+        <origin xyz="0.0 0.0 1.5" rpy="0.0 0.0 0.0"/>
+    </joint>
+    <link name="body_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.5 1.0 0.2"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>      
+    </link>
+
+    <xacro:right_leg prefix="front" parent="body_link" xyz="-0.2 0.6 0"/>
+    <xacro:right_leg prefix="back"  parent="body_link" xyz="-0.2 -0.6 0"/>
+    <xacro:left_leg  prefix="front" parent="body_link" xyz="0.2 0.6 0"/>
+    <xacro:left_leg  prefix="back"  parent="body_link" xyz="0.2 -0.6 0"/>
+    
+</robot>
